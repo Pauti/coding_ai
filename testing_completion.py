@@ -1,4 +1,4 @@
-def fibonacci(n):
+def fibonacci(n, memo={0: 0, 1: 1}):
     """
     Calculate the nth Fibonacci number.
     
@@ -8,24 +8,15 @@ def fibonacci(n):
     Returns:
         int: The nth Fibonacci number.
     """
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        fib = 1
-        prev_fib = 0
-        for i in range(2, n+1):
-            temp = fib
-            fib += prev_fib
-            prev_fib = temp
-        return fib
+    if n not in memo:
+        memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
+    return memo[n]
 
 for i in range(10):
     print(fibonacci(i))
 
 
-def factorial(n):
+def factorial(n, acc=1):
     """
     Calculate the factorial of a given number.
     
@@ -36,12 +27,9 @@ def factorial(n):
         int: The factorial of the given number.
     """
     if n == 0:
-        return 1
+        return acc
     else:
-        fact = 1
-        for i in range(1, n+1):
-            fact *= i
-        return fact
+        return factorial(n-1, n * acc)
 
 for i in range(10):
     print(factorial(i))
